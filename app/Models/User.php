@@ -21,6 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'designation_id',
+        'userName',
+        'created_by',
+        'updated_by',
+        'status',
+        'phone',
+        'image',
+        'present_address',
+        'parmanent_address',
     ];
 
     /**
@@ -41,4 +50,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class, 'designation_id');
+    }
 }

@@ -24,43 +24,37 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          {{-- <li class="nav-item has-treeview menu-open">
-            <a href="{{ route('dashboard') }}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <li class="nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-dashboard"></i>
               <p>
                 Dashboard
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview {{ Route::is('admin.user.index') || Route::is('admin.user.create') || Route::is('admin.user.edit') ? 'menu-open' : '' }}">
+            <a href="" class="nav-link {{ Route::is('admin.user.index') || Route::is('admin.user.create') || Route::is('admin.user.edit') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                User Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
+                <a href="{{ route('admin.user.index') }}" class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
+                  <i class=""></i>
+                  <p>User List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
+                <a href="{{ route('admin.user.create') }}" class="nav-link {{ Route::is('admin.user.create') ? 'active' : '' }}">
+                  <i class=""></i>
+                  <p>New User</p>
                 </a>
               </li>
             </ul>
-          </li> --}}
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Category
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
           </li>
         </ul>
       </nav>

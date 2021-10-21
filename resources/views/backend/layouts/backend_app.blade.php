@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{ asset('backend') }}/plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Noty Notification-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"/>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <!--Main Contents-->
@@ -68,6 +70,8 @@
 <script src="{{ asset('backend') }}/dist/js/demo.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Noty Notification-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 @stack('script')
 </body>
 </html>

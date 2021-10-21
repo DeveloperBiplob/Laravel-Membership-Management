@@ -22,6 +22,21 @@
             </div>
           @endif
           </span>
+        <span>
+            @if(session()->has('success'))
+                @push('script')
+                <script>
+                    new Noty({
+                        type: 'success',
+                        layout: 'topCenter',
+                        text: "{{ session('success') }}",
+                        theme: 'semanticui',
+                        timeout: 3000,
+                    }).show();
+                </script>
+                @endpush
+            @endif
+          </span>
         <!-- /.content-header -->
 
         <!-- Main content -->

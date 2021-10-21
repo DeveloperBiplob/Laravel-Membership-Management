@@ -120,7 +120,7 @@
       @auth('web')
       <ul class="navbar-nav">
         <li class="nav-item">
-          <form action="" method="POST">
+          <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button style="margin-top: 10px" class="btn btn-primary btn-sm" onclick=" return confirm('Are you to logout this Dashboard!')">Logout</button>
           </form>

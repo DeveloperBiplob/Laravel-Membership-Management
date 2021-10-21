@@ -67,7 +67,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="password">Password</label>
-                      <input type="password" name="password" id="" class="form-control" placeholder="Enter Password" value="{{ $user->password }}">
+                      <input type="password" name="password" id="" class="form-control" placeholder="Enter Password" >
                     </div>
                     @error('password')
                         <span class="text-danger">{{ $message }}</span>
@@ -85,7 +85,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="password">Confirm Password</label>
-                      <input type="password" name="con_password" id="" class="form-control" placeholder="Enter Confirm Password" value="{{ $user->password }}">
+                      <input type="password" name="con_password" id="" class="form-control" placeholder="Enter Confirm Password" >
                     </div>
                     @error('con_password')
                         <span class="text-danger">{{ $message }}</span>

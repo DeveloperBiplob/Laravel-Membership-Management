@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
@@ -19,6 +21,7 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -71,9 +74,26 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    // Define the Guard name for Spatie Authorization.
+    protected $guard_name = 'sanctum';
+
     public function designation()
     {
         return $this->belongsTo(Designation::class, 'designation_id');
+    }
+
+    public static function createRole($name)
+    {
+        // If role exist, then return the role
+        $role = Role::where('name', $name)->first();
+        if(!is_null($role)){
+            return $role;
+        }else{
+            // If role not exist, then create a new role
+            $role = Role::create(['name' => $name]);
+        }
+        // Finnaly return role
+        return $role;
     }
 
 }

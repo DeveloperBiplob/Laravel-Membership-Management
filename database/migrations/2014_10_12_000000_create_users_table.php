@@ -16,8 +16,8 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('designation_id')->constrained('designations')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->string('name');
             $table->string('userName')->unique();
             $table->enum('status', ['Active', 'Inactive'])->default('Active');

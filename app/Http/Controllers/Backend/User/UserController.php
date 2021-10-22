@@ -8,6 +8,8 @@ use App\Models\Designation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -29,8 +31,58 @@ class UserController extends Controller
      */
     public function create()
     {
+        /*
+
+        //## Static way Create Role---
+        // Role::create(['name' => 'Supper Admin']);
+        // Role::create(['name' => 'Admin']);
+        // Role::create(['name' => 'User']);
+        // Role::create(['name' => 'Member']);
+        // return true;
+
+        //## Dynamic way create role, Crate a dynamic funcion in User Model.
+        // $role = User::createRole('Supper Admin');
+
+        //## Permission create---
+        // Permission::create(['name'=> 'dashboard.view', 'guard_name'=> 'sanctum', 'group_name'=> 'Dashboard']);
+        // Permission::create(['name'=> 'dashboard.statictice', 'guard_name'=> 'sanctum', 'group_name'=> 'Dashboard']);
+        // Permission::create(['name'=> 'user.create', 'guard_name'=> 'sanctum', 'group_name'=> 'User Permission']);
+        // Permission::create(['name'=> 'user.list', 'guard_name'=> 'sanctum', 'group_name'=> 'User Permission']);
+        // Permission::create(['name'=> 'user.edit', 'guard_name'=> 'sanctum', 'group_name'=> 'User Permission']);
+        // Permission::create(['name'=> 'user.delete', 'guard_name'=> 'sanctum', 'group_name'=> 'User Permission']);
+        // Permission::create(['name'=> 'user.view', 'guard_name'=> 'sanctum', 'group_name'=> 'User Permission']);
+        // return true;
+
+        // specific role by givePermission
+        $role = User::createRole('Supper Admin');
+
+        //## Give Role Permissions---
+        // $role->givePermissionTo('user.create');
+        // $role->givePermissionTo('user.list');
+        // $role->givePermissionTo('user.edit');
+        // $role->givePermissionTo('user.delete');
+        // $role->givePermissionTo('user.view');
+        // return $role;
+
+        //## Find the loggedUser.
+        $user = request()->user();
+
+        //## Assign Role
+        // Initialy dosen't woark role, then just defile guard name in model.
+        $user->assignRole('Supper Admin');
+
+        */
+
+        // Check if loggedUse has "User.create" Permission or Not.
+        if(!request()->user()->hasPermissionTo('user.create')){
+            return abort(401);
+        }
+
         $designations = Designation::get(['id', 'name']);
         return view('backend.user.create', compact('designations'));
+
+
+
     }
 
     /**
@@ -73,6 +125,7 @@ class UserController extends Controller
             $user->parmanet_address = $request->parmanet_address ;
             $user->present_address = $request->present_address ;
             $user->designation_id = $request->designation_id ;
+            $user->created_by = request()->user()->id ;
 
             if($request->image){
                 $user->image = File::upload($request->image, 'images/users');
@@ -107,6 +160,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        // Check if loggedUse has "User.edit" Permission or Not.
+        if(!request()->user()->hasPermissionTo('user.edit')){
+            return abort(401);
+        }
+
         $designations = Designation::get(['id', 'name']);
         return view('backend.user.edit', compact(['user', 'designations']));
     }
@@ -120,6 +178,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // Check if loggedUse has "User.u" Permission or Not.
+        if(!request()->user()->hasPermissionTo('user.edit')){
+            return abort(401);
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:100', 'min:2'],
             'userName' => ["unique:users,userName," . "$user->id"],
@@ -144,6 +207,7 @@ class UserController extends Controller
             $user->parmanet_address = $request->parmanet_address ;
             $user->present_address = $request->present_address ;
             $user->designation_id = $request->designation_id ;
+            $user->updated_by = request()->user()->id ;
 
             if($request->image){
                 File::deleteFile($user->image);
@@ -170,8 +234,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // Check if loggedUse has "User.delete" Permission or Not.
+        if(!request()->user()->hasPermissionTo('user.delete')){
+            return abort(401);
+        }
         if($user->image){
             File::deleteFile($user->image);
+            $user->deleted_at = request()->user()->id;
         }
         $delete = $user->delete();
         if($delete){

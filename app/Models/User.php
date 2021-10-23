@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -22,6 +23,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +38,7 @@ class User extends Authenticatable
         'userName',
         'created_by',
         'updated_by',
+        'deleted_by',
         'status',
         'phone',
         'image',
@@ -75,7 +78,7 @@ class User extends Authenticatable
     ];
 
     // Define the Guard name for Spatie Authorization.
-    protected $guard_name = 'sanctum';
+    // protected $guard_name = 'sanctum';
 
     public function designation()
     {

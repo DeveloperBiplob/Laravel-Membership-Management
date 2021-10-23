@@ -16,7 +16,10 @@ class DesignationSeeder extends Seeder
     public function run()
     {
         Designation::create([
-            'name' => Str::random(5)
+            'name' => 'Charman'
+        ]);
+        Designation::create([
+            'name' => 'Mamber'
         ]);
     }
 }

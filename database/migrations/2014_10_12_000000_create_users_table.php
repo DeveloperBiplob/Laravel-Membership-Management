@@ -16,8 +16,9 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('designation_id')->constrained('designations')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('created_by')->nullable()->constrained('users');
-            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->string('name');
             $table->string('userName')->unique();
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
@@ -31,8 +32,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->softDeletes('deleted_at', 0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
